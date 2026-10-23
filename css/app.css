@@ -1,0 +1,457 @@
+/* Sizes follow the Unity layout, designed at 1080 wide: 1cqw = 10.8 reference pixels. */
+:root {
+  --green: #19693a; /* the sprites' own background green */
+  --white: #ffffff;
+  --button: #0ae967;
+  --button-text: #0d331a;
+  --secondary: #bfd9cc;
+  --backdrop: rgba(0, 0, 0, 0.6);
+  --line: 2px;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--green);
+  color: var(--white);
+  font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+img {
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+#app {
+  container-type: inline-size;
+  position: relative;
+  width: min(100vw, 600px);
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overflow: hidden;
+}
+
+/* Header: icon and gear on the sides, the name in the white frame, the status in the green band below. */
+.header {
+  position: relative;
+  flex: none;
+  height: 14.1cqw;
+  border-bottom: var(--line) solid var(--white);
+}
+
+.header-icon,
+.header-options {
+  position: absolute;
+  top: 0;
+  width: 13.9cqw;
+  height: 13.9cqw;
+}
+
+.header-icon {
+  left: 0;
+}
+
+.header-options {
+  right: 0;
+}
+
+.header-options img {
+  width: 100%;
+  height: 100%;
+}
+
+.header-frame {
+  position: absolute;
+  top: 0;
+  left: 13.9cqw;
+  right: 13.9cqw;
+  height: 8.9cqw;
+  background: var(--white);
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5cqw;
+  font-size: 6.2cqw;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.header-frame span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status {
+  position: absolute;
+  top: 8.9cqw;
+  bottom: 0;
+  left: 13.9cqw;
+  right: 13.9cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.4cqw;
+  white-space: nowrap;
+}
+
+/* Board: one row per meal, one column per calendar day, white lines between. */
+.board {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 13.9cqw repeat(var(--days, 3), minmax(0, 1fr));
+  grid-template-rows: 12.7cqw repeat(var(--meals, 3), minmax(0, 1fr));
+  border-bottom: var(--line) solid var(--white);
+}
+
+.board > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+.corner,
+.day-header {
+  border-bottom: var(--line) solid var(--white);
+}
+
+.day-header,
+.cell {
+  border-left: var(--line) solid var(--white);
+}
+
+.day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6cqw;
+  overflow: hidden;
+  /* Smaller text when many days share the width. */
+  --fit: calc(86cqw / var(--days, 3));
+}
+
+.day-name {
+  font-weight: bold;
+  font-size: min(5.9cqw, calc(var(--fit) * 0.42));
+  line-height: 1;
+}
+
+.day-date {
+  font-size: min(3.3cqw, calc(var(--fit) * 0.24));
+  line-height: 1;
+}
+
+.corner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock {
+  position: relative;
+  width: 9cqw;
+  height: 9cqw;
+}
+
+.clock img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.meal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.meal-icon img {
+  width: min(12cqw, 90%);
+  height: min(12cqw, 90%);
+  object-fit: contain;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5cqw 2.2cqw;
+}
+
+.cell img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  transform: scale(1.1);
+}
+
+/* Footer: the refill button centred, the calendar reminder on its right. */
+.footer {
+  position: relative;
+  flex: none;
+  height: 26.9cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer .button-primary {
+  width: 55.6cqw;
+  height: 18.5cqw;
+  font-size: 5.4cqw;
+  padding: 0 4cqw;
+}
+
+.calendar-button {
+  position: absolute;
+  right: 5cqw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13cqw;
+  height: 13cqw;
+  padding: 1.5cqw;
+  color: var(--white);
+}
+
+.calendar-button svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Buttons share the rounded look of the Unity button sprite. */
+.button {
+  border-radius: 2.2cqw;
+  font-weight: bold;
+  color: var(--button-text);
+  line-height: 1.15;
+}
+
+.button-primary {
+  background: var(--button);
+  box-shadow: inset 0 0 0 0.4cqw rgba(255, 255, 255, 0.55);
+}
+
+.button-secondary {
+  background: var(--secondary);
+}
+
+.button:not(:disabled):active {
+  filter: brightness(0.9);
+}
+
+/* Modals: dimmed backdrop over the whole screen, a green panel on top. */
+.modal {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: var(--backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9cqw 3.7cqw;
+}
+
+.panel {
+  position: relative;
+  background: var(--green);
+  border-radius: 3cqw;
+  box-shadow: inset 0 0 0 0.4cqw rgba(255, 255, 255, 0.35);
+}
+
+.close-button {
+  position: absolute;
+  top: 2.5cqw;
+  right: 2.5cqw;
+  width: 10cqw;
+  height: 10cqw;
+}
+
+.close-button img {
+  width: 100%;
+  height: 100%;
+}
+
+.panel-title {
+  margin: 0;
+  padding: 3.7cqw 13cqw 0;
+  min-height: 13cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 5.9cqw;
+}
+
+.dialog-panel {
+  width: 81.5cqw;
+  padding-bottom: 3.7cqw;
+}
+
+.dialog-message {
+  margin: 2cqw 3.7cqw 4cqw;
+  text-align: center;
+  font-size: 4.1cqw;
+  line-height: 1.35;
+  white-space: pre-line;
+}
+
+.dialog-buttons {
+  display: flex;
+  gap: 3.7cqw;
+  padding: 0 3.7cqw;
+}
+
+.dialog-buttons .button {
+  flex: 1;
+  height: 14cqw;
+  font-size: 4.8cqw;
+}
+
+.options-panel {
+  width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.options-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 2cqw 5.5cqw 3cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.9cqw;
+}
+
+.options-label {
+  font-weight: bold;
+  font-size: 4.4cqw;
+  margin-top: 1.5cqw;
+}
+
+.field {
+  height: 9.3cqw;
+  border: 0;
+  border-radius: 2.2cqw;
+  background: var(--white);
+  color: var(--button-text);
+  font: inherit;
+  font-size: 4.4cqw;
+  padding: 0 2.2cqw;
+  width: 100%;
+  min-width: 0;
+}
+
+.meal-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5cqw;
+}
+
+.meal-row {
+  display: flex;
+  align-items: center;
+  gap: 1.9cqw;
+  height: 9.3cqw;
+}
+
+.meal-row-icon {
+  width: 9.3cqw;
+  height: 9.3cqw;
+  object-fit: contain;
+}
+
+.time-field {
+  width: 30cqw;
+  text-align: center;
+}
+
+.spacer {
+  flex: 1;
+}
+
+#add-meal {
+  height: 9.3cqw;
+  font-size: 6cqw;
+}
+
+.square {
+  width: 9.3cqw;
+  height: 9.3cqw;
+  flex: none;
+  font-size: 6cqw;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 2.8cqw;
+}
+
+.stepper-value {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  font-size: 6.6cqw;
+}
+
+.languages {
+  flex: none;
+  display: flex;
+  justify-content: center;
+  gap: 2.8cqw;
+  padding: 2cqw 3.7cqw 5cqw;
+}
+
+.languages button {
+  width: 16.7cqw;
+  height: 16.7cqw;
+  opacity: 0.4;
+}
+
+.languages button[aria-pressed="true"] {
+  opacity: 1;
+}
+
+.languages img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
