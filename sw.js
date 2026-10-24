@@ -1,6 +1,6 @@
 // Offline support: the whole app is cached on install and served from the cache.
 // Bump VERSION with every release so installed apps pick up the new files.
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CACHE = `feed-my-horse-${VERSION}`;
 
 const FILES = [
