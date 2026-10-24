@@ -1,12 +1,16 @@
 /* Sizes follow the Unity layout, designed at 1080 wide: 1cqw = 10.8 reference pixels. */
 :root {
-  --green: #19693a; /* the sprites' own background green */
+  --background: #3c4445; /* the meal sprites' own background grey */
+  --band: #1c5e69; /* top band and horizontal lines, the gear sprite's background */
+  --accent: #28a1b2; /* clock, day headers, calendar button */
+  --text: #96e8f2;
   --white: #ffffff;
+  --refill: #23bc53;
   --button: #0ae967;
   --button-text: #0d331a;
   --secondary: #bfd9cc;
   --backdrop: rgba(0, 0, 0, 0.6);
-  --line: 2px;
+  --line: 0.37cqw;
   color-scheme: light;
 }
 
@@ -18,8 +22,8 @@ html,
 body {
   margin: 0;
   height: 100%;
-  background: var(--green);
-  color: var(--white);
+  background: var(--background);
+  color: var(--text);
   font-family: Arial, "Liberation Sans", Helvetica, sans-serif;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
@@ -64,12 +68,13 @@ img {
   overflow: hidden;
 }
 
-/* Header: icon and gear on the sides, the name in the white frame, the status in the green band below. */
+/* Header: one coloured band, icon and gear on the sides, the name above the status between them. */
 .header {
   position: relative;
   flex: none;
-  height: 14.1cqw;
-  border-bottom: var(--line) solid var(--white);
+  height: 13.9cqw;
+  margin-bottom: 0.6cqw;
+  background: var(--band);
 }
 
 .header-icon,
@@ -99,13 +104,11 @@ img {
   left: 13.9cqw;
   right: 13.9cqw;
   height: 8.9cqw;
-  background: var(--white);
-  color: var(--green);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 1.5cqw;
-  font-size: 6.2cqw;
+  font-size: 7.3cqw;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -124,18 +127,18 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.4cqw;
+  font-size: 4.1cqw;
   white-space: nowrap;
 }
 
-/* Board: one row per meal, one column per calendar day, white lines between. */
+/* Board: one row per meal, one column per calendar day, a line under the day headers. */
 .board {
   flex: 1;
   min-height: 0;
   display: grid;
   grid-template-columns: 13.9cqw repeat(var(--days, 3), minmax(0, 1fr));
-  grid-template-rows: 12.7cqw repeat(var(--meals, 3), minmax(0, 1fr));
-  border-bottom: var(--line) solid var(--white);
+  grid-template-rows: 12.3cqw repeat(var(--meals, 3), minmax(0, 1fr));
+  border-bottom: var(--line) solid var(--band);
 }
 
 .board > * {
@@ -145,15 +148,11 @@ img {
 
 .corner,
 .day-header {
-  border-bottom: var(--line) solid var(--white);
-}
-
-.day-header,
-.cell {
-  border-left: var(--line) solid var(--white);
+  border-bottom: var(--line) solid var(--band);
 }
 
 .day-header {
+  color: var(--accent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -183,8 +182,8 @@ img {
 
 .clock {
   position: relative;
-  width: 9cqw;
-  height: 9cqw;
+  width: 8.6cqw;
+  height: 8.6cqw;
 }
 
 .clock img {
@@ -234,8 +233,9 @@ img {
 .footer .button-primary {
   width: 55.6cqw;
   height: 18.5cqw;
-  font-size: 5.4cqw;
+  font-size: 7.1cqw;
   padding: 0 4cqw;
+  background: var(--refill);
 }
 
 .calendar-button {
@@ -246,7 +246,7 @@ img {
   width: 13cqw;
   height: 13cqw;
   padding: 1.5cqw;
-  color: var(--white);
+  color: var(--accent);
 }
 
 .calendar-button svg {
@@ -271,11 +271,15 @@ img {
   background: var(--secondary);
 }
 
+.dialog-buttons .button-secondary {
+  background: rgba(191, 217, 204, 0.51);
+}
+
 .button:not(:disabled):active {
   filter: brightness(0.9);
 }
 
-/* Modals: dimmed backdrop over the whole screen, a green panel on top. */
+/* Modals: dimmed backdrop over the whole screen, a grey panel on top. */
 .modal {
   position: absolute;
   inset: 0;
@@ -289,7 +293,7 @@ img {
 
 .panel {
   position: relative;
-  background: var(--green);
+  background: var(--background);
   border-radius: 3cqw;
   box-shadow: inset 0 0 0 0.4cqw rgba(255, 255, 255, 0.35);
 }
