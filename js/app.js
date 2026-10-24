@@ -171,7 +171,7 @@
 
   function showOptions() {
     editing = { ...config };
-    $('horse-name-input').value = $('horse-name').textContent;
+    $('horse-name-input').value = store.loadHorseName('');
     $('meal-rows').replaceChildren();
     for (const minutes of config.mealTimes)
       addMealRow(minutes);
@@ -189,11 +189,9 @@
     config = store.validate({ ...editing, mealTimes: times.length ? times : config.mealTimes });
     store.saveConfig(config);
 
-    const name = $('horse-name-input').value.trim();
-    if (name && name !== $('horse-name').textContent) {
-      $('horse-name').textContent = name;
-      store.saveHorseName(name);
-    }
+    // An empty name falls back to the default one.
+    store.saveHorseName($('horse-name-input').value.trim());
+    showHorseName();
 
     hideModal($('options-panel'));
     buildView(); // new meal times or box count redraw the calendar from the same refill time
@@ -263,8 +261,15 @@
 
   // ---- Texts ----
 
+  // Until the user names the horse, a default name in the current language.
+  function showHorseName() {
+    $('horse-name').textContent = store.loadHorseName('') || t('default_horse_name');
+  }
+
   function applyTexts() {
     document.documentElement.lang = language();
+    showHorseName();
+    $('horse-name-input').placeholder = t('default_horse_name');
     for (const element of document.querySelectorAll('[data-text]'))
       element.textContent = t(element.dataset.text);
     $('options-button').setAttribute('aria-label', t('options'));
@@ -280,8 +285,6 @@
   // ---- Start ----
 
   function start() {
-    $('horse-name').textContent = store.loadHorseName($('horse-name').textContent);
-
     $('refill-button').addEventListener('click', askRefill);
     $('calendar-button').addEventListener('click', addReminder);
     $('confirm-ok').addEventListener('click', () => {

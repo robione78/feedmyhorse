@@ -17,6 +17,7 @@ const Texts = (() => {
     refill: ['Refill', 'Feltöltés', 'Auffüllen', 'Remplir'],
     options_title: ['Options', 'Beállítások', 'Einstellungen', 'Options'],
     horse_name: ['Horse name', 'A ló neve', 'Name des Pferdes', 'Nom du cheval'],
+    default_horse_name: ['My horse', 'Az én lovam', 'Mein Pferd', 'Mon cheval'],
     meal_times: ['Daily meals', 'Napi etetések', 'Tägliche Mahlzeiten', 'Repas quotidiens'],
     box_count: ['Number of boxes', 'Dobozok száma', 'Anzahl der Boxen', 'Nombre de boîtes'],
     close: ['Close', 'Bezárás', 'Schließen', 'Fermer'],
