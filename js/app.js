@@ -8,7 +8,7 @@
 
   const MEAL_SPRITES = ['img/morning.png', 'img/day.png', 'img/night.png'];
   const FLAGS = { fr: 'img/language_french.png', de: 'img/language_german.png', en: 'img/language_english.png', hu: 'img/language_hungarian.png' };
-  const FLAG_ORDER = ['fr', 'de', 'en', 'hu']; // as drawn on the sprite sheet
+  const FLAG_ORDER = ['hu', 'en', 'de', 'fr'];
 
   const $ = id => document.getElementById(id);
 
